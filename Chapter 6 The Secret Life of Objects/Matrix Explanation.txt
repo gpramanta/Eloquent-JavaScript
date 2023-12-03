@@ -1,0 +1,716 @@
+// Using for of Loop for Matrix Iteration
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [];
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        this.content[y * width + x] = element(x, y);
+      }
+    }
+  }
+
+  get(x, y) {
+    return this.content[y * this.width + x];
+  }
+  set(x, y, value) {
+    this.content[y * this.width + x] = value;
+  }
+}
+
+class MatrixIterator {
+  constructor(matrix) {
+    this.x = 0;
+    this.y = 0;
+    this.matrix = matrix;
+  }
+
+  next() {
+    if (this.y == this.matrix.height) return {done: true};
+
+    let value = {x: this.x,
+                 y: this.y,
+                 value: this.matrix.get(this.x, this.y)};
+    this.x++;
+    if (this.x == this.matrix.width) {
+      this.x = 0;
+      this.y++;
+    }
+    return {value, done: false};
+  }
+}
+
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);
+};
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+for (let {x, y, value} of matrix) {
+  console.log(x, y, value);
+}
+
+// → 0 0 value 0,0
+// → 1 0 value 1,0
+// → 0 1 value 0,1
+// → 1 1 value 1,1
+
+/* EXPLANATION */
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [`value 0,0`];
+
+    for (let y = 0; 0 < 2; y++) {
+      for (let x = 0; 0 < 2; x++) {
+        this.content[0 * 2 + 0] = element(0, 0);
+      }
+    }
+  }
+
+  print() {
+  	return this.content;
+  }
+}
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+matrix.print();
+
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [`value 0,0`, `value 1,0`];
+
+    for (let y = 0; 0 < 2; y++) {
+      for (let x = 1; 1 < 2; x++) {
+        this.content[0 * 2 + 1] = element(1, 0);
+      }
+    }
+  }
+
+  print() {
+  	return this.content;
+  }
+}
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+matrix.print();
+
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [`value 0,0`, `value 1,0`, `value 0,1`];
+
+    for (let y = 1; 1 < 2; y++) {
+      for (let x = 0; 0 < 2; x++) {
+        this.content[1 * 2 + 0] = element(0, 1);
+      }
+    }
+  }
+
+  print() {
+  	return this.content;
+  }
+}
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+matrix.print();
+
+// 4th Loop: element(1, 1)
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [`value 0,0`, `value 1,0`, `value 0,1`, `value 1,1`];
+
+    for (let y = 1; 1 < 2; y++) {
+      for (let x = 1; 1 < 2; x++) {
+        this.content[1 * 2 + 1] = element(1, 1);
+      }
+    }
+  }
+
+  print() {
+  	return this.content;
+  }
+}
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+matrix.print();
+// → (4) ['value 0,0', 'value 1,0', 'value 0,1', 'value 1,1']
+
+/* EXPERIMENTING Using DIFFERENT Width/Height For CLEARER COMPREHENSION*/
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [];
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        this.content[y * width + x] = element(x, y);
+      }
+    }
+  }
+  print() {
+  	return this.content;
+  }
+}
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+matrix.print();
+// → (4) ['value 0,0', 'value 1,0', 'value 0,1', 'value 1,1']
+
+// Width = 3, Height = 2 ([y * width + x])
+let matrix = new Matrix(3, 2, (x, y) => `value ${x},${y}`);
+proper (*width)
+this.content[y * width + x] = element(x, y);
+this.content[0 * 3 + 0]0 = element(0,0);
+this.content[0 * 3 + 1]1 = element(1,0);
+this.content[0 * 3 + 2]2 = element(2,0);
+this.content[1 * 3 + 0]3 = element(0,1);
+this.content[1 * 3 + 1]4 = element(1,1);
+this.content[1 * 3 + 2]5 = element(2,1);
+
+// Width = 3, Height = 2 ([y * height + x])
+let matrix = new Matrix(3, 2, (x, y) => `value ${x},${y}`);
+experiment (*height)
+this.content[y * height + x] = element(x, y);
+this.content[0 * 2 + 0]0 = element(0,0);
+this.content[0 * 2 + 1]1 = element(1,0);
+this.content[1 * 2 + 0]2 = element(0,1);
+this.content[1 * 2 + 1]3 = element(1,1);
+
+
+/* Explaining get(x, y) */
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [];
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        this.content[y * width + x] = element(x, y);
+      }
+    }
+  }
+  get(x, y) {
+    return this.content[y * this.width + x];
+  }  
+  print() {
+  	return this.content;
+  }
+}
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+matrix.print();
+matrix.get(1, 1);
+// → 'value 1,1'
+
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [element(0, 0), element(1, 0), element(0, 1), element(1, 1)];
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        this.content[y * width + x] = element(x, y);
+      }
+    }
+  }
+  get(x, y) {
+    return this.content[1 * 2 + 1]; /* The result within the square brackets works as 
+  }  						an index for this.content as it return the value of   
+  print() {					this.content[3] which is a function call - element(1, 1)
+  	return this.content;		that returns 'value ${1}, ${1}' if we call matrix.get(1, 1);. */
+  }
+}
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+matrix.get(1, 1);
+
+/* Explaining the combination of class Matrix and class MatrixIterator */
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [];
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        this.content[y * width + x] = element(x, y);
+      }
+    }
+  }
+
+  get(x, y) {
+    return this.content[y * this.width + x];
+  }
+  set(x, y, value) {
+    this.content[y * this.width + x] = value;
+  }
+}
+
+class MatrixIterator {
+  constructor(matrix) {
+    this.x = 0;
+    this.y = 0;
+    this.matrix = matrix;
+  }
+
+  next() {
+    if (this.y == this.matrix.height) return {done: true};
+
+    let value = {x: this.x,
+                 y: this.y,
+                 value: this.matrix.get(this.x, this.y)};
+    this.x++;
+    if (this.x == this.matrix.width) {
+      this.x = 0;
+      this.y++;
+    }
+    return {value, done: false};
+  }
+}
+
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);
+};
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+for (let {x, y, value} of matrix) {
+  console.log(x, y, value);
+}
+// → 0 0 value 0,0
+// → 1 0 value 1,0
+// → 0 1 value 0,1
+// → 1 1 value 1,1
+
+/* First, we have to see the bigger picture of usage of each function. Let's start on class Matrix. */
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [];
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        this.content[y * width + x] = element(x, y);
+      }
+    }
+  }
+
+  get(x, y) {
+    return this.content[y * this.width + x];
+  }
+  set(x, y, value) {
+    this.content[y * this.width + x] = value;
+  }
+}
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+matrix
+// → Matrix {width: 2, height: 2, content: Array(4)}
+/* The above result is the value of matrix. Now, it should be noted that in this for of iteration only get() method is used,
+meanwhile set(x, y, value) & next() are use separately.
+
+/* In order to know what is "this" in:
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);
+};
+we can put console.log(this); above return new MatrixIterator(this);
+
+Matrix.prototype[Symbol.iterator] = function() {
+  console.log(this);
+  return new MatrixIterator(this);
+};
+// → Matrix {width: 2, height: 2, content: Array(4)}
+// → 0 0 value 0,0
+// → 1 0 value 1,0
+// → 0 1 value 0,1
+// → 1 1 value 1,1
+
+
+// Using .next() to Iterate the matrix
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [];
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        this.content[y * width + x] = element(x, y);
+      }
+    }
+  }
+
+  get(x, y) {
+    return this.content[y * this.width + x];
+  }
+  set(x, y, value) {
+    this.content[y * this.width + x] = value;
+  }
+}
+
+class MatrixIterator {
+  constructor(matrix) {
+    this.x = 0;
+    this.y = 0;
+    this.matrix = matrix;
+  }
+
+  next() {
+    if (this.y == this.matrix.height) return {done: true};
+
+    let value = {x: this.x,
+                 y: this.y,
+                 value: this.matrix.get(this.x, this.y)};
+    this.x++;
+    if (this.x == this.matrix.width) {
+      this.x = 0;
+      this.y++;
+    }
+    return {value, done: false};
+  }
+}
+
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);        
+};
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`), 
+matrixIterator = matrix[Symbol.iterator]();
+
+console.log(matrixIterator.next());
+// → {value: {x: 0, y: 0, value: 'value 0,0'}, done: false}
+console.log(matrixIterator.next());
+// → {value: {x: 1, y: 0, value: 'value 1,0'}, done: false}
+console.log(matrixIterator.next());
+// → {value: {x: 0, y: 1, value: 'value 0,1'}, done: false}
+console.log(matrixIterator.next());
+// → {value: {x: 1, y: 1, value: 'value 1,1'}, done: false}
+console.log(matrixIterator.next());
+// → {done: true}
+
+
+Explanation: 
+class MatrixIterator {
+  constructor(matrix) {
+    this.x = 0;
+    this.y = 0;
+    this.matrix = matrix;
+  }
+
+  next() {
+    if (this.y == this.matrix.height) return {done: true};
+
+    let value = {x: this.x, 				// → 0
+                 y: this.y,				// → 0
+                 value: this.matrix.get(this.x, this.y)}; // → let value = {x: 0, y: 0, value: 'value 0,0'}
+    this.x++;							    // → 0+1 = 1;
+    if (this.x == this.matrix.width) {
+      this.x = 0;
+      this.y++;
+    }
+    return {value, done: false};				    // → {{x: 0, y: 0, value: 'value 0,0'}, done: false};
+  }
+}
+
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);				
+};
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+for (let {x, y, value} of matrix) {
+  console.log(x, y, value);					   // → 0 0 value 0,0
+}
+// → 0 0 value 0,0
+
+class MatrixIterator {
+  constructor(matrix) {
+    this.x = 1;
+    this.y = 0;
+    this.matrix = matrix;
+  }
+
+  next() {
+    if (this.y == this.matrix.height) return {done: true};
+
+    let value = {x: this.x,					    // → x: 1,
+                 y: this.y,					    // → y: 0,
+                 value: this.matrix.get(this.x, this.y)}; // → let value = {x: 1, y: 0, value: 'value 1,0'}
+    this.x++;							    // → x = 1+1 = 2;
+    if (this.x == this.matrix.width) {			    // → if (2 == 2) {
+      this.x = 0;							         this.x = 0;	
+      this.y++;							         y = 0+1 = 1;
+    }										   }
+    return {value, done: false};				    // → {{x: 1, y: 0, value: 'value 1,0'}, done: false};
+  }
+}
+
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);
+};
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+for (let {x, y, value} of matrix) {
+  console.log(x, y, value);					   // → 1 0 value 1,0
+}
+// → 1 0 value 1,0
+
+class MatrixIterator {
+  constructor(matrix) {
+    this.x = 0;
+    this.y = 1;
+    this.matrix = matrix;
+  }
+
+  next() {
+    if (this.y == this.matrix.height) return {done: true};
+
+    let value = {x: this.x,					    // → x: 0,
+                 y: this.y,					    // → y: 1,
+                 value: this.matrix.get(this.x, this.y)}; // → let value = {x: 0, y: 1, value: 'value 0,1'}
+    this.x++;							    // → x = 0+1 = 1;
+    if (this.x == this.matrix.width) {
+      this.x = 0;
+      this.y++;							        
+    }										   
+    return {value, done: false};				    // → {{x: 0, y: 1, value: 'value 0,1'}, done: false};
+  }
+}
+
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);
+};
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+for (let {x, y, value} of matrix) {
+  console.log(x, y, value);					   // → 0 1 value 0,1
+}
+// → 0 1 value 0,1
+
+class MatrixIterator {
+  constructor(matrix) {
+    this.x = 1;
+    this.y = 1;
+    this.matrix = matrix;
+  }
+
+  next() {
+    if (this.y == this.matrix.height) return {done: true};
+
+    let value = {x: this.x,					    // → x: 1,
+                 y: this.y,					    // → y: 1,
+                 value: this.matrix.get(this.x, this.y)}; // → let value = {x: 1, y: 1, value: 'value 1,1'}
+    this.x++;							    // → x = 1+1 = 2;
+    if (this.x == this.matrix.width) {			    // if (2 == 2) {
+      this.x = 0;								 this.x = 0;
+      this.y++;							       this.y = 1 + 1 = 2;
+    }										   
+    return {value, done: false};				    // → {{x: 1, y: 1, value: 'value 1,1'}, done: false};
+  }
+}
+
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);
+};
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+for (let {x, y, value} of matrix) {
+  console.log(x, y, value);					   // → 1 1 value 1,1
+}
+// → 1 1 value 1,1
+
+class MatrixIterator {
+  constructor(matrix) {
+    this.x = 0;
+    this.y = 2;
+    this.matrix = matrix;
+  }
+
+  next() {
+    if (this.y == this.matrix.height) return {done: true};	// if (2 == 2) return {done: true};
+
+    let value = {x: this.x,					    
+                 y: this.y,					    
+                 value: this.matrix.get(this.x, this.y)}; 
+    this.x++;							    
+    if (this.x == this.matrix.width) {			    
+      this.x = 0;								 
+      this.y++;							       
+    }										   
+    return {value, done: false};				    
+  }
+}
+
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);
+};
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+for (let {x, y, value} of matrix) {
+  console.log(x, y, value);					   
+}
+// → {done: true}
+
+// Explanation for the Whole Parts
+The class Matrix is basically used to produce `value ${x},${y}` through for loop, store the string to this.content = [], as well as to store get(x, y) method to get the string in this.content array. This get() method are called within the next() method in class MatrixIterator. 
+
+The questions that come up are - is the next() method used in the program? Yes, it is. The prove is if we delete the next function, the whole program won't run. But then, where does the next() call? Nowhere we could find next() call if we observe the whole program. Actually, the answer is the 
+call exists but it exists within this line of code:
+
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);
+};
+
+How do we know? Take a look at this example:
+
+let iteratorObj = 'this string'[Symbol.iterator]();
+iteratorObj;
+// → StringIterator {}
+	[[Prototype]]: String Iterator
+	 next: ƒ next()
+	 Symbol(Symbol.toStringTag): "String Iterator"
+	 [[Prototype]]: Object
+
+If we observe the result, within the StringIterator {} there is next: ƒ next() which indicates that [Symbol.iterator]() calls the next() method. Similarly, within our program, this function - Matrix.prototype[Symbol.iterator]... calls the next() method within MatrixIterator(this);. Take a look at the result:
+
+class Matrix...
+class MatrixIterator...
+
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);
+};
+
+let matrix = new Matrix(2, 3, (x, y) => `value ${x},${y}`);
+Matrix.prototype[Symbol.iterator]();
+// → MatrixIterator {x: 0, y: 0, matrix: {…}}
+	matrix: {constructor: ƒ, get: ƒ, set: ƒ, Symbol(Symbol.iterator): ƒ}
+	x: 0
+	y: 0
+	[[Prototype]]: Object
+	 constructor: class MatrixIterator
+	 next: ƒ next()
+	 [[Prototype]]: Object
+
+
+Now, the important point that should be noted is that although all the method such as get(), set(), & next() are already there within JS, the reason as to why we write down again all those functions was to modify get(), set(), & next() in order to produce the desired result in connection to Matrix Iteration.
+
+Finally, for the explanation of the for of loop, it is important to comprehend the sequence of the codes and what it produce below:
+
+Matrix.prototype[Symbol.iterator] = function() {	
+    console.log(new MatrixIterator(this));
+  return new MatrixIterator(this);				/*2*/ return new MatrixIterator(this = Matrix obj.);
+};
+
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);	  /*1*/ Calling class Matrix, produces: Matrix {width: 2, height: 2, content: Array(4)}
+for (let {x, y, value} of matrix) {
+  console.log(x, y, value);
+}
+
+// → MatrixIterator {x: 0, y: 0, matrix: Matrix}
+     0 0 'value 0,0'
+     1 0 'value 1,0'
+     0 1 'value 0,1'
+     1 1 'value 1,1'
+
+Although on the surface, the loop seems to refer "matrix" obj. → Matrix {width: 2, height: 2, content: Array(4)}, but this obj. doesn't contain x, y & value keys, only MatrixIterator obj. contains those keys as we can see above. Now to understand this we should know what actually Matrix.protottype... and what Let matrix... is.
+
+class Matrix {
+...
+}
+
+Matrix.prototype;
+// → {constructor: ƒ, get: ƒ, set: ƒ}
+
+For understanding what Matrix.prototype code actually is we can see the difference in the result above & below. In the above result, the class Matrix only contains {constructor: ƒ, get: ƒ, set: ƒ} but if we put the code Matrix.prototype...
+
+class Matrix {
+...
+}
+
+class MatrixIterator {
+...
+}
+
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);
+};
+
+Matrix.prototype;
+// → {constructor: ƒ, get: ƒ, set: ƒ, Symbol(Symbol.iterator): ƒ}
+
+The result tells us that the Matrix.prototype... code is a function that put the class MatrixIterator as a Symbol within the class Matrix and thus if we run 
+this binding let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`); the class MatrixIterator already exists within Matrix class. 
+
+In sequent, within the class Matrix, matrix produces this obj → {width: 2, height: 2, content: Array(4)}. 
+Next, this obj is used by matrix[Symbol.iterator]().next(); to produce this obj → {x: 0, y: 0, matrix: Matrix}. Finally, the for of loop loops the obj prints out the values represented by keys within console.log(x, y, value);.
+
+/*For a clearer explanation, read the text on the beginning of "The iterator interface" section*/
+
+// MAP OF PROCESS
+This map is intended to show the process of a program step by step
+
+/*4*/
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;		/*5*/
+    this.height = height;	
+    this.content = [];
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        this.content[y * width + x] = element(x, y);
+      }
+    }
+  }
+
+  get(x, y) {
+    return this.content[y * this.width + x];
+  }
+  set(x, y, value) {
+    this.content[y * this.width + x] = value;
+  }
+}
+
+/*9*/
+class MatrixIterator {
+  constructor(matrix) {
+    this.x = 0;
+    this.y = 0;
+    this.matrix = matrix;
+  }
+
+  next() {
+    if (this.y == this.matrix.height) return {done: true};
+
+    let value = {x: this.x,
+                 y: this.y,
+                 value: this.matrix.get(this.x, this.y)};
+    this.x++;
+    if (this.x == this.matrix.width) {
+      this.x = 0;
+      this.y++;
+    }
+    return {value, done: false}; /*10*/
+  }
+}
+/*3*/  /*6*/
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this); /*11*/
+};		 /*8*/	    /*7*/
+
+    /*1*/	     /*2*/
+let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+		/*12*/	  /*13*/
+for (let {x, y, value} of matrix) {
+  console.log(x, y, value); /*14*/
+}

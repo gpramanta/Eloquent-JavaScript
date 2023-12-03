@@ -1,0 +1,58 @@
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [];
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        this.content[y * width + x] = element(x, y);
+      }
+    }
+  }
+
+  get(x, y) {
+    return this.content[y * this.width + x];
+  }
+  set(x, y, value) {
+    this.content[y * this.width + x] = value;
+  }
+}
+
+class SymmetricMatrix extends Matrix {
+  constructor(size, element = (x, y) => undefined) {
+    super(size, size, (x, y) => {
+      if (x < y) return element(y, x);
+      else return element(x, y);
+    });
+  }
+
+  set(x, y, value) {
+    super.set(x, y, value);
+    if (x != y) {
+      super.set(y, x, value);
+    }
+  }
+}
+
+let matrix = new SymmetricMatrix(2, (x, y) => `${x},${y}`); /* Let's use 2 instead of 5 for the size so that it makes us easier to understand
+console.log(matrix.get(1, 0));				       this class by comparing it to class Matrix */
+// → 1,0
+
+1) extends code indicates that this class shouldn’t be directly based on the default Object prototype but on some other class. This is called the
+   superclass. The derived class is the subclass.
+2) size parameter in costructor refers to 5 and within the super parameter it symmetrically refers to width & height in class Matrix.
+3) The sequence of class SymmetricMatrix:
+	a. for loops in class Matrix produces x & y numbers.
+	b. Both numbers are processed within (x, y) arrow function in super.
+	c. The if else changes the position of x & y numbers based on the position. E.g: x number is placed on the 2nd position (y position) instead on the 	   1st. Meanwhile, y number is placed on the 1st position (x position) instead on the 2nd.
+4) Then, the element(y, x) or element(x, y) is transferred to the element call and produces 1,0.
+5) The way set method works is similar to the if else condition in super. The super method results in changing 2 matrixs. E.g: 
+   Before:
+   SymmetricMatrix {width: 3, height: 3, content: ['0,0', '1,0', '2,0', '1,0', '1,1', '2,1', '2,0', '2,1', '2,2']}
+   
+   let matrix = new SymmetricMatrix(3, (x, y) => `${x},${y}`);
+   matrix.set(2, 1, "TEST");
+   matrix;
+   SymmetricMatrix {width: 3, height: 3, content: ['0,0', '1,0', '2,0', '1,0', '1,1', 'TEST', '2,0', 'TEST', '2,2']}
+	

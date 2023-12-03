@@ -1,0 +1,67 @@
+// Pyramid
+function space(levels) {
+  let current = "", spaces = [];
+  for (let i = 0; i < levels - 1; i++) { 
+    current += " ";
+    spaces.push(current);
+  }
+  return spaces;
+}
+
+function pattern(levels) {
+  let current = "", patterns = [];
+  for (let i = 0; i < (levels * 2) - 1; i++) {
+    current += "*";
+    if (i % 2 == 0) patterns.push(current);
+  }
+  return patterns;
+}
+
+function attach(levels) {
+  let patterns = pattern(levels), spaces = space(levels),
+  arrStr = [], pyramid = "";
+  for (let i = 0; i < levels; i++) {
+    let current = "";
+    if ((i + 1) > spaces.length) arrStr.push(patterns[i]);
+    else {
+      current += spaces[(spaces.length - 1) - i];
+      current += patterns[i];
+      current += spaces[(spaces.length - 1) - i];
+      arrStr.push(current);
+    }
+  }
+  for (let str of arrStr) {
+    pyramid += str;
+    pyramid += "\n";
+  }
+  return pyramid;
+}
+
+console.log(attach(6));
+//      *     
+//     ***    
+//    *****   
+//   *******  
+//  ********* 
+// ***********
+
+// Remove Duplicates
+function strToArr(str) {
+  let arr = [], string = String(str);
+  for (let char of string) {
+    arr.push(char);
+  }
+  return arr;
+}
+
+function removeDuplicate(arr) {
+  let duplicates = [], different = [];
+  for (let i = 0; arr.length; i++) {
+    let current = arr.shift();
+    if (arr.includes(current)) duplicates.push(current);
+    else different.push(current);
+  }
+  return different.join("");
+}
+
+console.log(removeDuplicate(strToArr(123)));
